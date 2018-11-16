@@ -1,4 +1,4 @@
-# ManiaECS Generator
+# ManiaECS Generator (HEAVY WIP)
 
 An utility to automatically generate ECS related files for maniascript related things.
 
@@ -98,6 +98,9 @@ Boolean Has(SEntity _Entity, ScoreData _Empty)
     return Has(_Entity.Index, _Empty);
 }
 ```
+
+Once it's done, move the file `Components.Script.txt` where you want.  
+You will also have a `ECS` folder. Move it into your library folder (`Lib/`) as the components file need this folder to work.
 
 ---
 ### How I can use ECS in maniascript?
