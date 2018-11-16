@@ -10,6 +10,11 @@ Why was this tool made?
 Requirements:
 - You need to download MsUnit from Nerpson: https://github.com/Nerpson/ManiaScripts/blob/master/Libs/MsUnit.Script.txt
 
+To do list (most important):
+- Component Type Manager
+- Add entity archetype (so it would be possible to know what components the entity got)
+- Add queries 
+
 ---
 ### Command Arguments:  
 
