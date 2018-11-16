@@ -7,6 +7,9 @@ Why was this tool made?
 - Each time I needed to modify a little feature, I needed to redo everything.
     
 
+Requirements:
+- You need to download MsUnit from Nerpson: https://github.com/Nerpson/ManiaScripts/blob/master/Libs/MsUnit.Script.txt
+
 ---
 ### Command Arguments:  
 

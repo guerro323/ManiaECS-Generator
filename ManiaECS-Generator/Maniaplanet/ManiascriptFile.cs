@@ -17,8 +17,8 @@ namespace ManiaECS_Generator
 
         public ManiaScriptFile(string path, string originalPath, string text)
         {
-            Path = path;
-            OriginalPath = originalPath;
+            Path = path.Replace('\\', '/');
+            OriginalPath = originalPath.Replace('\\', '/');
             Text = text;
         }
     }

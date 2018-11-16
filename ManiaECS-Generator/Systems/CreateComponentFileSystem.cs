@@ -103,7 +103,7 @@ namespace ManiaECS_Generator.Systems
                 var scriptPath = mpStruct.OriginalManiaScriptFile.Path;
                 // TODO: In future, we should directly remove everything after a dot.
                 var fileName = Path.GetFileNameWithoutExtension(scriptPath).Replace(".Script", "");
-                if (scriptPath[0] == '\\')
+                if (scriptPath[0] == '\\' || scriptPath[0] == '/')
                 {
                     scriptPath = scriptPath.Remove(0, 1);
                 }
