@@ -1,0 +1,12 @@
+#Include "_Globals[MsUnitPath]" as MsUnit
+Void Set(Integer _Index, _TplTypeDef _Value)
+{
+    MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+
+    _TplTypeCompList[_Index] = _Value;
+}
+
+Void Set(_EntityManager_EntityType _Entity, _TplTypeDef _Value)
+{
+    Set(_Entity.Index, _Value);
+}

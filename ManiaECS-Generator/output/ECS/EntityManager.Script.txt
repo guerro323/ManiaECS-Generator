@@ -1,0 +1,54 @@
+#Include "TextLib" as TL
+
+#Struct SEntity
+{
+	Boolean IsAlive;
+	Integer Index;
+}
+
+declare SEntity[] G_CachedEntities;
+declare SEntity[Integer] G_AliveEntities;
+
+SEntity CreateEntity()
+{
+	declare Entity = SEntity 
+	{
+		IsAlive = True,
+		Index = G_CachedEntities.count + 1
+	};
+
+	G_CachedEntities.add(Entity);
+	G_AliveEntities[Entity.Index] = Entity;
+	
+	return Entity;
+}
+
+Void DestroyEntity(SEntity _Entity)
+{
+	declare CopyEntity = _Entity;
+	
+	CopyEntity.IsAlive = False;
+
+	G_CachedEntities[_Entity.Index] = CopyEntity;
+	G_AliveEntities.removekey(_Entity.Index);
+}
+
+Boolean Exists(Integer _Index)
+{
+	return G_AliveEntities.existskey(_Index);
+}
+
+Boolean Exists(SEntity _Entity)
+{
+	return Exists(_Entity.Index);
+}
+
+Void AddComponent(Integer _Index, Integer _ComponentType)
+{
+    
+}
+
+Void RemoveComponent(Integer _Index, Integer _ComponentType)
+{
+
+}
