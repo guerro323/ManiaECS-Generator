@@ -48,7 +48,7 @@ namespace ManiaECS_Generator
         {
             allSystems[typeof(T)] = system;
 
-            system.InternalOnGeneratorPass();
+            system.InternalOnGeneratorPass(this);
 
             return this;
         }

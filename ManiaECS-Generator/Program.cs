@@ -4,6 +4,7 @@ using ManiaECS_Generator.Systems;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 
 namespace ManiaECS_Generator
@@ -14,11 +15,18 @@ namespace ManiaECS_Generator
         {
             [Option('i')]
             public string InputFolder { get; set; }
+
             [Option('o')]
             public string OutputFolder { get; set; }
+
             [Option('t')]
             public string TemplateFolder { get; set; }
+
             public string EcsLibraryFolder { get; set; }
+
+            [Option('p')]
+            public string IncludePrefix { get; set; }
+
             [Option('d')]
             public bool Daemon { get; set; }
         }
@@ -46,17 +54,19 @@ namespace ManiaECS_Generator
 
         public static void Run(CmdOptions options, ParserResult<CmdOptions> parserResult)
         {
-            Logger.CurrentLogger = new ConsoleLogger();
+            Logger.CurrentLogger = new ConsoleLogger {CanLogVerbose = true};
 
-            var inputFolder = options.InputFolder;
-            var outputFolder = options.OutputFolder;
+            var inputFolder    = options.InputFolder;
+            var outputFolder   = options.OutputFolder;
             var templateFolder = options.TemplateFolder;
-            var ecsFolder = options.EcsLibraryFolder;
+            var ecsFolder      = options.EcsLibraryFolder;
 
-            if (string.IsNullOrEmpty(inputFolder)) inputFolder = Environment.CurrentDirectory + "\\input";
-            if (string.IsNullOrEmpty(outputFolder)) outputFolder = Environment.CurrentDirectory + "\\output";
-            if (string.IsNullOrEmpty(templateFolder)) templateFolder = Environment.CurrentDirectory + "\\template";
-            if (string.IsNullOrEmpty(ecsFolder)) ecsFolder = "Libs/ECS";
+            var entryFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            if (string.IsNullOrEmpty(inputFolder)) inputFolder       = entryFolder + "\\input";
+            if (string.IsNullOrEmpty(outputFolder)) outputFolder     = entryFolder + "\\output";
+            if (string.IsNullOrEmpty(templateFolder)) templateFolder = entryFolder + "\\template";
+            if (string.IsNullOrEmpty(ecsFolder)) ecsFolder           = "Libs/ECS";
 
             Logger.WriteInfo("Info", $"Input Folder: {inputFolder}");
             Logger.WriteInfo("Info", $"Output Folder: {outputFolder}");
@@ -72,22 +82,35 @@ namespace ManiaECS_Generator
                 .AddSystem<IOFolderSystem>()
                 .AddSystem<ScriptFileSystem>()
                 .AddSystem<InputDataSystem>()
-                .AddSystem<CreateComponentFileSystem>();
+                .AddSystem<CreateComponentFileSystem>()
+                .AddSystem<GetQueryFileSystem>();
 
-            var ioFolderSystem = generatorWorld.GetSystem<IOFolderSystem>();
-            var scriptFileSystem = generatorWorld.GetSystem<ScriptFileSystem>();
-            var inputDataSystem = generatorWorld.GetSystem<InputDataSystem>();
+            var ioFolderSystem            = generatorWorld.GetSystem<IOFolderSystem>();
+            var scriptFileSystem          = generatorWorld.GetSystem<ScriptFileSystem>();
+            var inputDataSystem           = generatorWorld.GetSystem<InputDataSystem>();
             var createComponentFileSystem = generatorWorld.GetSystem<CreateComponentFileSystem>();
+            var getQueryFileSystem        = generatorWorld.GetSystem<GetQueryFileSystem>();
 
             ioFolderSystem.SetDirectories(inputFolder, outputFolder);
             var scripts = ioFolderSystem.GetScriptsFromPath(inputFolder);
 
             foreach (var script in scripts)
             {
+                if (script.Contains(ioFolderSystem.OutputDirectory))
+                {
+                    Logger.WriteInfo("Info", "Skipped output file: " + script);
+                    continue;
+                }
+
                 var file = script.Replace(inputFolder, string.Empty);
 
                 if (!file.ToLower().EndsWith("script.txt"))
                     continue;
+                if (File.ReadAllText(script).Contains("//nogenerate"))
+                {
+                    Logger.WriteInfo("Info", "Skipped script file: " + file);
+                    continue;
+                }
 
                 var msScript = scriptFileSystem.AddFile(file, script);
 
@@ -96,9 +119,12 @@ namespace ManiaECS_Generator
 
             Logger.WriteInfo("Info", "Elapsed time for creating struct information: " + stopwatch.ElapsedMilliseconds + "ms");
 
+            var queryResult = getQueryFileSystem.GetQueryResult();
+
             createComponentFileSystem.TemplateDirectory = templateFolder;
-            createComponentFileSystem.EcsLibraryPath = ecsFolder;
-            var result = createComponentFileSystem.CreateContent(inputDataSystem.AllStructures);
+            createComponentFileSystem.EcsLibraryPath    = ecsFolder;
+            createComponentFileSystem.Prefix            = options.IncludePrefix;
+            var result = createComponentFileSystem.CreateContent(inputDataSystem.AllStructures, queryResult.structHeader, queryResult.bottom);
 
             File.WriteAllText(ioFolderSystem.OutputDirectory + "/Components.Script.txt", result);
 

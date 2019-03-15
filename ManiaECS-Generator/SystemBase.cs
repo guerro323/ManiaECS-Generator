@@ -5,14 +5,18 @@ using System.Text;
 namespace ManiaECS_Generator
 {
     /// <summary>
-    /// Offer a base for all systems from a <see cref="GeneratorWorld"/>.
+    /// Offer a base for all systems from a <see cref="World"/>.
     /// </summary>
     public abstract class SystemBase
     {
+        protected GeneratorWorld World;
+        
         private bool generatorAsAtLeastPassedOnce;
 
-        internal void InternalOnGeneratorPass()
+        internal void InternalOnGeneratorPass(GeneratorWorld world)
         {
+            World = world;
+            
             OnGeneratorPass(generatorAsAtLeastPassedOnce);
 
             generatorAsAtLeastPassedOnce = true;

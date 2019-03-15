@@ -10,7 +10,7 @@ namespace ManiaECS_Generator.Systems
     {
         private string inputDirectory, outputDirectory;
 
-        public string InputDirectory => InputDirectory;
+        public string InputDirectory => inputDirectory;
         public string OutputDirectory => outputDirectory;
 
         protected override void OnGeneratorPass(bool calledOneTime)

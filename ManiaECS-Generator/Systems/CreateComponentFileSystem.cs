@@ -49,6 +49,8 @@ namespace ManiaECS_Generator.Systems
             }
         }
 
+        public string Prefix;
+
         public List<FileScriptTemplate> AllTemplates;
 
         public CreateComponentFileSystem()
@@ -61,7 +63,7 @@ namespace ManiaECS_Generator.Systems
             // don't care
         }
 
-        public string CreateContent(IEnumerable<ManiaPlanetStruct> structs)
+        public string CreateContent(IEnumerable<ManiaPlanetStruct> structs, string structHeader, string bottom)
         {
             Assert.IsTrue(ecsLibraryPath != null, "ecsLibraryPath != null");
             Assert.IsTrue(structs != null, "structs != null");
@@ -108,7 +110,7 @@ namespace ManiaECS_Generator.Systems
                     scriptPath = scriptPath.Remove(0, 1);
                 }
 
-                var libraryStrToAdd = $"#Include \"{scriptPath}\" as {GetLibName(fileName)}\n";
+                var libraryStrToAdd = $"#Include \"{Prefix + scriptPath}\" as {GetLibName(fileName)}\n";
 
                 // Avoid duplicate
                 if (!strStructLibrary.Contains(libraryStrToAdd)) strStructLibrary += libraryStrToAdd;
@@ -117,10 +119,14 @@ namespace ManiaECS_Generator.Systems
                 strStructAliases += $"#Struct {GetLibName(fileName)}::{mpStruct.Name} as {mpStruct.Name}\n";
             }
 
-            strStructAliases += "#Struct EntityManager::Entity as SEntity";
+            strStructAliases += "#Struct EntityManager::SEntity as SEntity";
 
             str += strStructLibrary + "\n";
             str += strStructAliases + "\n";
+
+            str += "// Struct Header generation...\n";
+            str += structHeader;
+            str += "\n";
 
             foreach (var mpStruct in structs)
             {
@@ -143,11 +149,15 @@ namespace ManiaECS_Generator.Systems
                 // --------------- --------------- --------------- --------------- //
                 foreach (var tpl in AllTemplates)
                 {
-                    str += $"// Template from dynamic script: {(tpl.IsDynScript ? "Yes": "No")}\n";
+                    //str += $"// Template from dynamic script: {(tpl.IsDynScript ? "Yes": "No")}\n";
                     WriteTemplate(ref str, tpl, mpStruct);
-                    str += "\n\n";
+                    str += "\n";
                 }
             }
+            
+            str += "// Bottom generation...\n";
+            str += bottom;
+            str += "\n";
 
             Logger.WriteInfo("Result", $"Result component script :\n{str}", new LogOption(true));
             Logger.WriteInfo("Create Component File", "Component file created.", new LogOption(ConsoleColor.DarkMagenta));
