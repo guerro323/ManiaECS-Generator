@@ -128,6 +128,9 @@ namespace ManiaECS_Generator.Systems
             str += structHeader;
             str += "\n";
 
+            str += "declare Integer G_RuntimeVersion;";
+            str += "\n";
+
             foreach (var mpStruct in structs)
             {
                 // --------------- --------------- --------------- --------------- //
@@ -142,6 +145,7 @@ namespace ManiaECS_Generator.Systems
                 // Write component list
                 // --------------- --------------- --------------- --------------- //
                 str += $"declare {mpStruct.Name}[Integer] {GetComponentListVarName(mpStruct.Name)};";
+                str += $"declare Integer G_{mpStruct.Name}Version;";
                 str += "\n\n";
 
                 // --------------- --------------- --------------- --------------- //

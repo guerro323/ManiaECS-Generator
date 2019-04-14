@@ -1,12 +1,12 @@
 #Include "_Globals[MsUnitPath]" as MsUnit
 Boolean Has(Integer _Index, _TplTypeDef _Empty)
 {
-    MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
-
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+    
     return _TplTypeCompList.existskey(_Index);
 }
 
 Boolean Has(_EntityManager_EntityType _Entity, _TplTypeDef _Empty)
 {
-    return Has(_Entity.Index, _Empty);
+    return _TplTypeCompList.existskey(_Entity.Index);
 }

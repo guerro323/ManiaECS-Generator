@@ -1,12 +1,12 @@
 #Include "_Globals[MsUnitPath]" as MsUnit
 _TplTypeDef Get(Integer _Index, _TplTypeDef _Empty)
 {
-    MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
-
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+    
     return _TplTypeCompList[_Index];
 }
 
 _TplTypeDef Get(_EntityManager_EntityType _Entity, _TplTypeDef _Empty)
 {
-    return Get(_Entity.Index, _Empty);
+    return _TplTypeCompList[_Entity.Index];
 }

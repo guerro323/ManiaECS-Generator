@@ -1,0 +1,6 @@
+// This script was automatically generated
+
+#Include "Libs/ECS/EntityManager.Script.txt" as EntityManager
+#Include "Libs/Nerpson/MsUnit.Script.txt" as MsUnit
+
+#Struct EntityManager::Entity as SEntity
