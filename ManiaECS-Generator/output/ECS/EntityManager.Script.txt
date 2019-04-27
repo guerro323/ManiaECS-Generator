@@ -9,6 +9,13 @@
 declare SEntity[] G_CachedEntities;
 declare SEntity[Integer] G_AliveEntities;
 
+declare Integer G_DestroyVersion;
+
+Integer GetDestroyVersion()
+{
+	return G_DestroyVersion;
+}
+
 SEntity CreateEntity()
 {
 	declare Entity = SEntity 
@@ -31,6 +38,8 @@ Void DestroyEntity(SEntity _Entity)
 
 	G_CachedEntities[_Entity.Index] = CopyEntity;
 	G_AliveEntities.removekey(_Entity.Index);
+	
+	G_DestroyVersion += 1;
 }
 
 Boolean Exists(Integer _Index)

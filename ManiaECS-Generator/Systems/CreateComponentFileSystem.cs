@@ -131,6 +131,8 @@ namespace ManiaECS_Generator.Systems
             str += "declare Integer G_RuntimeVersion;";
             str += "\n";
 
+            str += "Void Destroy(SEntity _Entity) { EntityManager::Destroy(_Entity); }\n";
+
             foreach (var mpStruct in structs)
             {
                 // --------------- --------------- --------------- --------------- //

@@ -64,17 +64,19 @@ namespace ManiaECS_Generator.Systems
 				function += $"declare {queryName}[] Cached_{queryName};\n";
 				function += $"declare SEntity[] Cached_Entities_{queryName};\n";
 				function += $"declare Integer {varQueryVersionName};\n";
+				function += $"declare Integer DestroyVersion_{queryName};\n";
 				function += $"declare Boolean Rebuild_GetAllEntities_{queryName};\n";
 				function += $"declare Boolean Rebuild_GetAllData_{queryName};\n";
 				function += $@"SEntity[] GetAllEntities({functionArgument.Remove(functionArgument.Length - 2, 2)})
 {{
-	declare rebuild = False;
+	declare rebuild = DestroyVersion_{queryName} < EntityManager::GetDestroyVersion();
 	{checkVersion}
 
 	if (!rebuild && !Rebuild_GetAllEntities_{queryName})
 		return Cached_Entities_{queryName};
 
 	{varQueryVersionName} = G_RuntimeVersion;
+	DestroyVersion_{queryName} = EntityManager::GetDestroyVersion();
 
 	Rebuild_GetAllData_{queryName} = True;
 	Rebuild_GetAllEntities_{queryName} = False;
@@ -96,13 +98,14 @@ namespace ManiaECS_Generator.Systems
 ";
 				function += $@"{queryName}[] GetAllData({functionArgument.Remove(functionArgument.Length - 2, 2)})
 {{
-	declare rebuild = False;
+	declare rebuild = DestroyVersion_{queryName} < EntityManager::GetDestroyVersion();
 	{checkVersion}
 
 	if (!rebuild && !Rebuild_GetAllData_{queryName})
 		return Cached_{queryName};
 
 	{varQueryVersionName} = G_RuntimeVersion;
+	DestroyVersion_{queryName} = EntityManager::GetDestroyVersion();
 
 	Rebuild_GetAllEntities_{queryName} = True;
 	Rebuild_GetAllData_{queryName} = False;
