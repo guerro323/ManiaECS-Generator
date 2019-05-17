@@ -1,0 +1,25 @@
+#Extends "Modes/ShootMania/Base/ModeShootmania.Script.txt"
+
+#Include "Modes/ShootMania/ExampleGameMode/Systems/CreatePlayerSystem.Script.txt" as CreatePlayerSystem
+#Include "Modes/ShootMania/ExampleGameMode/Systems/MoveWithDirectionSystem.Script.txt" as MoveWithDirectionSystem
+
+#Const Version				"2019-04-14"
+#Const ScriptName "ExampleGameMode.Script.txt"
+
+***Match_StartServer***
+***
+    log("Server started!");
+***
+
+***Match_PlayLoop***
+***
+    CreatePlayerSystem::Update();
+    MoveWithDirectionSystem::Update();
+***	
+
+***Match_EndServer***
+***
+    log("Server stopped!");
+***
+
+Void N() {}

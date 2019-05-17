@@ -1,0 +1,374 @@
+// This script was automatically generated
+
+#Include "Libs/ECS/EntityManager.Script.txt" as EntityManager
+#Include "Libs/Nerpson/MsUnit.Script.txt" as MsUnit
+#Include "Modes/ShootMania/ExampleGameMode/Components/MoveWithDirection.Script.txt" as Lib_MoveWithDirection
+#Include "Modes/ShootMania/ExampleGameMode/Components/Player.Script.txt" as Lib_Player
+#Include "Modes/ShootMania/ExampleGameMode/Components/Position.Script.txt" as Lib_Position
+
+#Struct Lib_MoveWithDirection::SMoveWithDirection as SMoveWithDirection
+#Struct Lib_Player::SPlayer as SPlayer
+#Struct Lib_Position::SPosition as SPosition
+#Struct EntityManager::SEntity as SEntity
+// Struct Header generation...
+#Struct QueryResult_SPlayer{
+	SEntity Entity;
+
+	
+SPlayer _SPlayer;
+}
+#Struct QueryResult_SPosition_SMoveWithDirection{
+	SEntity Entity;
+
+	
+SPosition _SPosition;
+SMoveWithDirection _SMoveWithDirection;
+}
+
+declare Integer G_RuntimeVersion;
+Void Destroy(SEntity _Entity) { EntityManager::Destroy(_Entity); }
+/// --------------- --------------- --------------- --------------- ///
+/// SMoveWithDirection
+/// --------------- --------------- --------------- --------------- ///
+
+declare SMoveWithDirection[Integer] G_ComponentsSMoveWithDirection;declare Integer G_SMoveWithDirectionVersion;
+
+
+SMoveWithDirection Get(Integer _Index, SMoveWithDirection _Empty)
+{
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+    
+    return G_ComponentsSMoveWithDirection[_Index];
+}
+
+SMoveWithDirection Get(SEntity _Entity, SMoveWithDirection _Empty)
+{
+    return G_ComponentsSMoveWithDirection[_Entity.Index];
+}
+
+Void Set(Integer _Index, SMoveWithDirection _Value)
+{
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+
+	if (!G_ComponentsSMoveWithDirection.existskey(_Index))
+	{
+		G_RuntimeVersion += 1;
+		G_SMoveWithDirectionVersion = G_RuntimeVersion;
+	}
+
+    G_ComponentsSMoveWithDirection[_Index] = _Value;
+}
+
+Void Set(SEntity _Entity, SMoveWithDirection _Value)
+{
+	if (!G_ComponentsSMoveWithDirection.existskey(_Entity.Index))
+	{
+		G_RuntimeVersion += 1;
+		G_SMoveWithDirectionVersion = G_RuntimeVersion;
+	}
+
+    G_ComponentsSMoveWithDirection[_Entity.Index] = _Value;
+}
+
+Boolean Has(Integer _Index, SMoveWithDirection _Empty)
+{
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+    
+    return G_ComponentsSMoveWithDirection.existskey(_Index);
+}
+
+Boolean Has(SEntity _Entity, SMoveWithDirection _Empty)
+{
+    return G_ComponentsSMoveWithDirection.existskey(_Entity.Index);
+}
+
+Boolean Remove(Integer _Index, SMoveWithDirection _Empty)
+{
+    MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+
+    return G_ComponentsSMoveWithDirection.removekey(_Index);
+}
+
+Boolean Remove(SEntity _Entity, SMoveWithDirection _Empty)
+{
+    return Remove(_Entity.Index, _Empty);
+}
+/// --------------- --------------- --------------- --------------- ///
+/// SPlayer
+/// --------------- --------------- --------------- --------------- ///
+
+declare SPlayer[Integer] G_ComponentsSPlayer;declare Integer G_SPlayerVersion;
+
+
+SPlayer Get(Integer _Index, SPlayer _Empty)
+{
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+    
+    return G_ComponentsSPlayer[_Index];
+}
+
+SPlayer Get(SEntity _Entity, SPlayer _Empty)
+{
+    return G_ComponentsSPlayer[_Entity.Index];
+}
+
+Void Set(Integer _Index, SPlayer _Value)
+{
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+
+	if (!G_ComponentsSPlayer.existskey(_Index))
+	{
+		G_RuntimeVersion += 1;
+		G_SPlayerVersion = G_RuntimeVersion;
+	}
+
+    G_ComponentsSPlayer[_Index] = _Value;
+}
+
+Void Set(SEntity _Entity, SPlayer _Value)
+{
+	if (!G_ComponentsSPlayer.existskey(_Entity.Index))
+	{
+		G_RuntimeVersion += 1;
+		G_SPlayerVersion = G_RuntimeVersion;
+	}
+
+    G_ComponentsSPlayer[_Entity.Index] = _Value;
+}
+
+Boolean Has(Integer _Index, SPlayer _Empty)
+{
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+    
+    return G_ComponentsSPlayer.existskey(_Index);
+}
+
+Boolean Has(SEntity _Entity, SPlayer _Empty)
+{
+    return G_ComponentsSPlayer.existskey(_Entity.Index);
+}
+
+Boolean Remove(Integer _Index, SPlayer _Empty)
+{
+    MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+
+    return G_ComponentsSPlayer.removekey(_Index);
+}
+
+Boolean Remove(SEntity _Entity, SPlayer _Empty)
+{
+    return Remove(_Entity.Index, _Empty);
+}
+/// --------------- --------------- --------------- --------------- ///
+/// SPosition
+/// --------------- --------------- --------------- --------------- ///
+
+declare SPosition[Integer] G_ComponentsSPosition;declare Integer G_SPositionVersion;
+
+
+SPosition Get(Integer _Index, SPosition _Empty)
+{
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+    
+    return G_ComponentsSPosition[_Index];
+}
+
+SPosition Get(SEntity _Entity, SPosition _Empty)
+{
+    return G_ComponentsSPosition[_Entity.Index];
+}
+
+Void Set(Integer _Index, SPosition _Value)
+{
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+
+	if (!G_ComponentsSPosition.existskey(_Index))
+	{
+		G_RuntimeVersion += 1;
+		G_SPositionVersion = G_RuntimeVersion;
+	}
+
+    G_ComponentsSPosition[_Index] = _Value;
+}
+
+Void Set(SEntity _Entity, SPosition _Value)
+{
+	if (!G_ComponentsSPosition.existskey(_Entity.Index))
+	{
+		G_RuntimeVersion += 1;
+		G_SPositionVersion = G_RuntimeVersion;
+	}
+
+    G_ComponentsSPosition[_Entity.Index] = _Value;
+}
+
+Boolean Has(Integer _Index, SPosition _Empty)
+{
+    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+    
+    return G_ComponentsSPosition.existskey(_Index);
+}
+
+Boolean Has(SEntity _Entity, SPosition _Empty)
+{
+    return G_ComponentsSPosition.existskey(_Entity.Index);
+}
+
+Boolean Remove(Integer _Index, SPosition _Empty)
+{
+    MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+
+    return G_ComponentsSPosition.removekey(_Index);
+}
+
+Boolean Remove(SEntity _Entity, SPosition _Empty)
+{
+    return Remove(_Entity.Index, _Empty);
+}
+// Bottom generation...
+
+//
+// Query 0:QueryResult_SPlayer 
+//
+declare QueryResult_SPlayer[] Cached_QueryResult_SPlayer;
+declare SEntity[] Cached_Entities_QueryResult_SPlayer;
+declare Integer QueryVersion_0;
+declare Integer DestroyVersion_QueryResult_SPlayer;
+declare Boolean Rebuild_GetAllEntities_QueryResult_SPlayer;
+declare Boolean Rebuild_GetAllData_QueryResult_SPlayer;
+SEntity[] GetAllEntities(SPlayer _0)
+{
+	declare rebuild = DestroyVersion_QueryResult_SPlayer < EntityManager::GetDestroyVersion();
+	if (QueryVersion_0 < G_SPlayerVersion) rebuild = True;
+
+
+	if (!rebuild && !Rebuild_GetAllEntities_QueryResult_SPlayer)
+		return Cached_Entities_QueryResult_SPlayer;
+
+	QueryVersion_0 = G_RuntimeVersion;
+	DestroyVersion_QueryResult_SPlayer = EntityManager::GetDestroyVersion();
+
+	Rebuild_GetAllData_QueryResult_SPlayer = True;
+	Rebuild_GetAllEntities_QueryResult_SPlayer = False;
+
+	Cached_Entities_QueryResult_SPlayer.clear();
+
+	declare entities = EntityManager::GetEntities();
+	foreach (entity in entities)
+	{
+		if (True && Has(entity, SPlayer {}))
+		{
+			Cached_Entities_QueryResult_SPlayer.add(entity);
+		}
+	}
+
+	return Cached_Entities_QueryResult_SPlayer;
+}
+
+QueryResult_SPlayer[] GetAllData(SPlayer _0)
+{
+	declare rebuild = DestroyVersion_QueryResult_SPlayer < EntityManager::GetDestroyVersion();
+	if (QueryVersion_0 < G_SPlayerVersion) rebuild = True;
+
+
+	if (!rebuild && !Rebuild_GetAllData_QueryResult_SPlayer)
+		return Cached_QueryResult_SPlayer;
+
+	QueryVersion_0 = G_RuntimeVersion;
+	DestroyVersion_QueryResult_SPlayer = EntityManager::GetDestroyVersion();
+
+	Rebuild_GetAllEntities_QueryResult_SPlayer = True;
+	Rebuild_GetAllData_QueryResult_SPlayer = False;
+
+	Cached_QueryResult_SPlayer.clear();
+
+	declare entities = EntityManager::GetEntities();
+	foreach (entity in entities)
+	{
+		declare queryResult = QueryResult_SPlayer {};
+		if (Has(entity, SPlayer {})) queryResult._SPlayer = Get(entity, SPlayer {}); else continue;
+		
+
+		queryResult.Entity = entity;
+
+		Cached_QueryResult_SPlayer.add(queryResult);
+	}
+
+	return Cached_QueryResult_SPlayer;
+}
+
+
+//
+// Query 1:QueryResult_SPosition_SMoveWithDirection 
+//
+declare QueryResult_SPosition_SMoveWithDirection[] Cached_QueryResult_SPosition_SMoveWithDirection;
+declare SEntity[] Cached_Entities_QueryResult_SPosition_SMoveWithDirection;
+declare Integer QueryVersion_1;
+declare Integer DestroyVersion_QueryResult_SPosition_SMoveWithDirection;
+declare Boolean Rebuild_GetAllEntities_QueryResult_SPosition_SMoveWithDirection;
+declare Boolean Rebuild_GetAllData_QueryResult_SPosition_SMoveWithDirection;
+SEntity[] GetAllEntities(SPosition _0, SMoveWithDirection _1)
+{
+	declare rebuild = DestroyVersion_QueryResult_SPosition_SMoveWithDirection < EntityManager::GetDestroyVersion();
+	if (QueryVersion_1 < G_SPositionVersion) rebuild = True;
+if (QueryVersion_1 < G_SMoveWithDirectionVersion) rebuild = True;
+
+
+	if (!rebuild && !Rebuild_GetAllEntities_QueryResult_SPosition_SMoveWithDirection)
+		return Cached_Entities_QueryResult_SPosition_SMoveWithDirection;
+
+	QueryVersion_1 = G_RuntimeVersion;
+	DestroyVersion_QueryResult_SPosition_SMoveWithDirection = EntityManager::GetDestroyVersion();
+
+	Rebuild_GetAllData_QueryResult_SPosition_SMoveWithDirection = True;
+	Rebuild_GetAllEntities_QueryResult_SPosition_SMoveWithDirection = False;
+
+	Cached_Entities_QueryResult_SPosition_SMoveWithDirection.clear();
+
+	declare entities = EntityManager::GetEntities();
+	foreach (entity in entities)
+	{
+		if (True && Has(entity, SPosition {})&& Has(entity, SMoveWithDirection {}))
+		{
+			Cached_Entities_QueryResult_SPosition_SMoveWithDirection.add(entity);
+		}
+	}
+
+	return Cached_Entities_QueryResult_SPosition_SMoveWithDirection;
+}
+
+QueryResult_SPosition_SMoveWithDirection[] GetAllData(SPosition _0, SMoveWithDirection _1)
+{
+	declare rebuild = DestroyVersion_QueryResult_SPosition_SMoveWithDirection < EntityManager::GetDestroyVersion();
+	if (QueryVersion_1 < G_SPositionVersion) rebuild = True;
+if (QueryVersion_1 < G_SMoveWithDirectionVersion) rebuild = True;
+
+
+	if (!rebuild && !Rebuild_GetAllData_QueryResult_SPosition_SMoveWithDirection)
+		return Cached_QueryResult_SPosition_SMoveWithDirection;
+
+	QueryVersion_1 = G_RuntimeVersion;
+	DestroyVersion_QueryResult_SPosition_SMoveWithDirection = EntityManager::GetDestroyVersion();
+
+	Rebuild_GetAllEntities_QueryResult_SPosition_SMoveWithDirection = True;
+	Rebuild_GetAllData_QueryResult_SPosition_SMoveWithDirection = False;
+
+	Cached_QueryResult_SPosition_SMoveWithDirection.clear();
+
+	declare entities = EntityManager::GetEntities();
+	foreach (entity in entities)
+	{
+		declare queryResult = QueryResult_SPosition_SMoveWithDirection {};
+		if (Has(entity, SPosition {})) queryResult._SPosition = Get(entity, SPosition {}); else continue;
+		if (Has(entity, SMoveWithDirection {})) queryResult._SMoveWithDirection = Get(entity, SMoveWithDirection {}); else continue;
+		
+
+		queryResult.Entity = entity;
+
+		Cached_QueryResult_SPosition_SMoveWithDirection.add(queryResult);
+	}
+
+	return Cached_QueryResult_SPosition_SMoveWithDirection;
+}
+
+

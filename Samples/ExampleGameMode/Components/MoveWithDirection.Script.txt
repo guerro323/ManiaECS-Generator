@@ -1,0 +1,5 @@
+#Struct SMoveWithDirection
+{
+    Real Speed;
+    Vec3 Direction;
+}

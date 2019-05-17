@@ -2,18 +2,17 @@
 
 An utility to automatically generate ECS related files for maniascript related things.
 
-Why was this tool made?
-- Each time I create a component structure, I needed to modify the file for it.
-- Each time I needed to modify a little feature, I needed to redo everything.
-    
-
 Requirements:
 - You need to download MsUnit from Nerpson: https://github.com/Nerpson/ManiaScripts/blob/master/Libs/MsUnit.Script.txt
 
 To do list (most important):
 - Component Type Manager
-- Add entity archetype (so it would be possible to know what components the entity got)
-- Add queries 
+- Add Archetypes (it would help a lot for querying entities with better performance)
+- Renaming most of the functions to be less 'generic' (ex: Has(SPosition {}) -> Has_SPosition())
+- performance performance
+- cleaner generation result
+
+I also got interested in making a C# to maniascript transcompiler (with basic functionalities) with this project in mind.
 
 ---
 ### Command Arguments:  
@@ -25,89 +24,7 @@ To do list (most important):
 ---
 ### How I can use this tool?
 
-First, you need to make your components structures, let's create one for the example.
+See [Quick Start](Documentations/quick_start.md)
 
-`{Input Path}` is the path to the Input folder.
 
-`{Input Path}/Libs/ComponentsDefinition/ScoreData.Script.txt`
-```ruby
-#Struct ScoreData
-{
-    Integer RoundPoints;
-    Integer Points;
-
-    Real RatioKd;
-}
-```
-
-Now, run the program by opening the command line, and enter:  
-`dotnet ManiaECS-Generator.dll {arguments}`
-
-If you have the input, output and template folder unchanged, don't add any arguments.
-
-In the end, the program will generate a file like that:
-```csharp
-// This script was automatically generated
-
-#Include "Libs/ECS/EntityManager.Script.txt" as EntityManager
-#Include "Libs/Nerpson/MsUnit.Script.txt" as MsUnit
-#Include "Libs/ComponentsDefinition/ScoreData.Script.txt" as Lib_ScoreData
-
-#Struct Lib_ScoreData::ScoreData as ScoreData
-#Struct EntityManager::Entity as SEntity
-/// --------------- --------------- --------------- --------------- ///
-/// ScoreData
-/// --------------- --------------- --------------- --------------- ///
-
-declare ScoreData[Integer] G_ComponentsScoreData;
-
-// Template from dynamic script: No
-
-ScoreData Get(Integer _Index, ScoreData _Empty)
-{
-    MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
-
-    return G_ComponentsScoreData[_Index];
-}
-
-ScoreData Get(SEntity _Entity, ScoreData _Empty)
-{
-    return Get(_Entity.Index, _Empty);
-}
-
-// Template from dynamic script: No
-
-Void Set(Integer _Index, ScoreData _Value)
-{
-    MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
-
-    G_ComponentsScoreData[_Index] = _Value;
-}
-
-Void Set(SEntity _Entity, ScoreData _Value)
-{
-    Set(_Entity.Index, _Value);
-}
-
-// Template from dynamic script: No
-
-Boolean Has(Integer _Index, ScoreData _Empty)
-{
-    MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
-
-    return G_ComponentsScoreData.existskey(_Index);
-}
-
-Boolean Has(SEntity _Entity, ScoreData _Empty)
-{
-    return Has(_Entity.Index, _Empty);
-}
-```
-
-Once it's done, move the file `Components.Script.txt` where you want.  
-You will also have a `ECS` folder. Move it into your library folder (`Lib/`) as the components file need this folder to work.
-
----
-### How I can use ECS in maniascript?
-
-todo
+[Documentation](Documentations/)

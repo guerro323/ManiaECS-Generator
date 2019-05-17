@@ -1,0 +1,4 @@
+// I've put nothing in it (so it's tag component), but you can add some informations about what a player is (eg: login, id, ...)
+#Struct SPlayer
+{
+}

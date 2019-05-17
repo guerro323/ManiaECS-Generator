@@ -1,0 +1,24 @@
+//nogenerate
+
+#Include "Modes/ShootMania/ExampleGameMode/generated/Components.Script.txt" as Components
+#Include "Modes/ShootMania/ExampleGameMode/Components/Position.Script.txt" as PositionComponent
+#Include "Modes/ShootMania/ExampleGameMode/Components/MoveWithDirection.Script.txt" as MoveWithDirectionComponent
+
+#Struct PositionComponent::SPosition as SPosition
+#Struct MoveWithDirectionComponent::SMoveWithDirection as SMoveWithDirection
+
+Void Update()
+{
+    // Get all entities with Position and MoveWithDirection components
+    foreach (Entity in Components::GetAllEntities(SPosition {}, SMoveWithDirection {}))
+    {
+        declare Position = Components::Get(Entity, SPosition {}); // get the position component value
+        declare MoveWithDirection = Components::Get(Entity, SMoveWithDirection {}); // get the move component value
+
+        Position.Value += MoveWithDirection.Direction * MoveWithDirection.Speed; // update the position...
+
+        UIManager.UIAll.BigMessage = "Pos: " ^ Position.Value; // debug: let's display the position of the player
+
+        Components::Set(Entity, Position); // Replace the position component...
+    }
+}

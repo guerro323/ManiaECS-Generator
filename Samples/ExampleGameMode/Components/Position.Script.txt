@@ -1,0 +1,4 @@
+#Struct SPosition
+{
+    Vec3 Value;
+}

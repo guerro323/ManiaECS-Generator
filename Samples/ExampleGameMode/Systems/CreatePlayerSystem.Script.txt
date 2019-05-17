@@ -1,0 +1,26 @@
+//nogenerate
+
+#Include "Libs/ECS/EntityManager.Script.txt" as EntityManager
+#Include "Modes/ShootMania/ExampleGameMode/generated/Components.Script.txt" as Components
+#Include "Modes/ShootMania/ExampleGameMode/Components/Player.Script.txt" as PlayerComponent
+#Include "Modes/ShootMania/ExampleGameMode/Components/Position.Script.txt" as PositionComponent
+#Include "Modes/ShootMania/ExampleGameMode/Components/MoveWithDirection.Script.txt" as MoveWithDirectionComponent
+
+#Struct PlayerComponent::SPlayer as SPlayer
+#Struct PositionComponent::SPosition as SPosition
+#Struct MoveWithDirectionComponent::SMoveWithDirection as SMoveWithDirection
+
+Void Update()
+{
+    // Get all entities that have a player component
+    declare Entities = Components::GetAllEntities(SPlayer {});
+    if (Entities.count != 0) // if there is already one, we stop here
+        return;
+
+    // If there are no player entity, let's create one!
+    declare PlayerEntity = EntityManager::CreateEntity();
+
+    Components::Set(PlayerEntity, SPlayer {}); // add a player tag
+    Components::Set(PlayerEntity, SPosition {Value = <0., 0., 0.>}); // add a position component
+    Components::Set(PlayerEntity, SMoveWithDirection {Speed = 4.2, Direction = <1., 0., 0.>}); // add a move component (you can tweak the values)
+}

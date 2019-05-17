@@ -1,0 +1,5 @@
+// CreatePlayerSystem queries
+SPlayer
+
+// MoveWithDirectionSystem queries
+SPosition, SMoveWithDirection
