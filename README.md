@@ -28,3 +28,7 @@ See [Quick Start](Documentations/quick_start.md)
 
 
 [Documentation](Documentations/)
+
+### Is there any real (trackmania/shootmania) gamemode made with ECS?
+
+Yes, I'm currently making an Assault gamemode with the ECS paradigm, once it will be a bit cleaned, I will post the link here.
