@@ -101,6 +101,7 @@ namespace ManiaECS_Generator
 
                     continue;
                 }
+                
                 // If we found a struct tag, and that we currently are searching for a struct tag and we have no structure
                 // in work, we begin our work for this new structure.
                 else if (str.EndsWith("#Struct") && structure == null && status == ParserStatus.SearchStructTag)
@@ -116,7 +117,7 @@ namespace ManiaECS_Generator
 
                 // We don't make structure related work if we have no structure.
                 if (structure == null) continue;
-
+                
                 // If we have no name and we are currently searching, we switch the status to 'WriteName'
                 if (structure.Name == null && !string.IsNullOrWhiteSpace(str) && status == ParserStatus.SearchName)
                 {
@@ -154,8 +155,7 @@ namespace ManiaECS_Generator
                     // If it's a closed bracket '}', we finished writing the struct.
                     if (ch == '}')
                     {
-                        Logger.WriteInfo("Parser", $"Finished writing struct ({structure.Name})", new LogOption(ConsoleColor.Green));
-                        Logger.WriteInfo("Parser", $"{structure.Data}", new LogOption(true, ConsoleColor.DarkGreen));
+                        //Logger.WriteInfo("Parser", $"{structure.Data}", new LogOption(true, ConsoleColor.DarkGreen));
 
                         Structures.Add(structure);
                         structure = null;

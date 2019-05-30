@@ -1,24 +1,62 @@
 #Include "_Globals[MsUnitPath]" as MsUnit
+// ---------------------------------- //
+/** Set or add a '_TplTypeDef' component on an entity
+ *
+ *	@param	_Index		The entity index
+ *	@param	_Value		The component value
+*/
 Void Set(Integer _Index, _TplTypeDef _Value)
 {
-    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
+	declare previousCount = _TplTypeCompList.count;
 
-	if (!_TplTypeCompList.existskey(_Index))
+	_TplTypeCompList[_Index] = _Value;
+    
+	// for performance reason, instead of checking if the entity did not had the component before
+	// we check if the length of the component array was different before the execution of this method
+	if (previousCount != _TplTypeCompList.count)
 	{
 		G_RuntimeVersion += 1;
-		G__TplTypeDefVersion = G_RuntimeVersion;
+		G__TplTypeDefVersion = G_RuntimeVersion;    
 	}
-
-    _TplTypeCompList[_Index] = _Value;
+	
+	G__TplTypeDefVersion_Data += 1;
 }
 
+// ---------------------------------- //
+/** Set or add a '_TplTypeDef' component on an entity
+ *
+ *	@param	_Entity		The entity
+ *	@param	_Value		The component value
+*/
 Void Set(_EntityManager_EntityType _Entity, _TplTypeDef _Value)
 {
-	if (!_TplTypeCompList.existskey(_Entity.Index))
+	declare previousCount = _TplTypeCompList.count;
+
+	_TplTypeCompList[_Entity.Index] = _Value;
+    
+	// for performance reason, instead of checking if the entity did not had the component before
+	// we check if the length of the component array was different before the execution of this method
+	if (previousCount != _TplTypeCompList.count)
 	{
 		G_RuntimeVersion += 1;
-		G__TplTypeDefVersion = G_RuntimeVersion;
+		G__TplTypeDefVersion = G_RuntimeVersion;    
 	}
+	
+	G__TplTypeDefVersion_Data += 1;
+}
 
-    _TplTypeCompList[_Entity.Index] = _Value;
+// ---------------------------------- //
+/** Set or add a '_TplTypeDef' component on an entity if the value is different from the baseline
+ *
+ *	@param	_Entity		The entity
+ *	@param	_Value		The component value
+ *	@param	_Baseline	The value to compare to (preferably the previous component value)
+*/
+Boolean Set(_EntityManager_EntityType _Entity, _TplTypeDef _Value, _TplTypeDef _Baseline)
+{
+	if (_Value == _Baseline) 
+		return False;
+		
+	Set(_Entity, _Value);
+	return True;
 }

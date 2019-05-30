@@ -28,6 +28,14 @@ namespace ManiaECS_Generator.Systems
             {
                 var structure = parser.Structures[i];
                 structure.OriginalManiaScriptFile = file;
+                
+                var info = string.Empty;
+                info += $"\tName={structure.Name}\n";
+                info += $"\tNickname={structure.Nickname}\n";
+                info += $"\tOriginalType={structure.OriginalType}\n";
+                info += $"\tFile={structure.OriginalManiaScriptFile?.Path}\n";
+                        
+                Logger.WriteInfo("Parser", $"Finished writing struct ({structure.Name})\n{{\n{info}}}", new LogOption(ConsoleColor.Green));
 
                 AllStructures.Add(structure);
                 parser.Structures[i] = structure;

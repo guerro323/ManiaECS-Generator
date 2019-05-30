@@ -131,7 +131,28 @@ namespace ManiaECS_Generator.Systems
             str += "declare Integer G_RuntimeVersion;";
             str += "\n";
 
-            str += "Void Destroy(SEntity _Entity) { EntityManager::Destroy(_Entity); }\n";
+            var destroyFunction = string.Empty;
+
+            foreach (var mpStruct in structs)
+            {
+                var listName = GetComponentListVarName(mpStruct.Name);
+                destroyFunction += $"\tif ({listName}.existskey(_Entity.Index)) {listName}.removekey(_Entity.Index);\n";
+            }
+
+            str += $@"
+
+// ---------------------------------- //
+/** Destroy an entity with along its remaining components
+ *
+ *	@param	_Entity		The entity
+*/
+Void Destroy(SEntity _Entity) 
+{{
+    EntityManager::Destroy(_Entity); 
+
+{destroyFunction}}}
+
+";
 
             foreach (var mpStruct in structs)
             {
@@ -141,14 +162,14 @@ namespace ManiaECS_Generator.Systems
                 str += "/// --------------- --------------- --------------- --------------- ///\n";
                 str += $"/// {mpStruct.Name}\n";
                 str += "/// --------------- --------------- --------------- --------------- ///\n";
-                str += "\n";
 
                 // --------------- --------------- --------------- --------------- //
                 // Write component list
                 // --------------- --------------- --------------- --------------- //
-                str += $"declare {mpStruct.Name}[Integer] {GetComponentListVarName(mpStruct.Name)};";
-                str += $"declare Integer G_{mpStruct.Name}Version;";
-                str += "\n\n";
+                str += $"declare {mpStruct.Name}[Integer] {GetComponentListVarName(mpStruct.Name)};\n";
+                str += $"declare Integer G_{mpStruct.Name}Version;\n";
+                str += $"declare Integer G_{mpStruct.Name}Version_Data;";
+                str += "\n";
 
                 // --------------- --------------- --------------- --------------- //
                 // Write Templates
@@ -165,7 +186,6 @@ namespace ManiaECS_Generator.Systems
             str += bottom;
             str += "\n";
 
-            Logger.WriteInfo("Result", $"Result component script :\n{str}", new LogOption(true));
             Logger.WriteInfo("Create Component File", "Component file created.", new LogOption(ConsoleColor.DarkMagenta));
 
             return str;

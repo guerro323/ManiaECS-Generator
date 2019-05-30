@@ -1,12 +1,24 @@
 #Include "_Globals[MsUnitPath]" as MsUnit
-Boolean Has(Integer _Index, _TplTypeDef _Empty)
+// ---------------------------------- //
+/** Check if an entity has a '_TplTypeDef' component
+ *
+ *	@param	_Index		The entity index
+ *
+ *	@return 		True is the component is present, false otherwise
+*/
+Boolean Has_TplTypeDef(Integer _Index)
 {
-    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
-    
-    return _TplTypeCompList.existskey(_Index);
+	return _TplTypeCompList.existskey(_Index);
 }
 
-Boolean Has(_EntityManager_EntityType _Entity, _TplTypeDef _Empty)
+// ---------------------------------- //
+/** Check if an entity has a '_TplTypeDef' component
+ *
+ *	@param	_Entity		The entity
+ *
+ *	@return 		True is the component is present, false otherwise
+*/
+Boolean Has_TplTypeDef(_EntityManager_EntityType _Entity)
 {
-    return _TplTypeCompList.existskey(_Entity.Index);
+	return _TplTypeCompList.existskey(_Entity.Index);
 }

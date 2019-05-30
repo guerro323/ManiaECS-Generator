@@ -1,12 +1,24 @@
 #Include "_Globals[MsUnitPath]" as MsUnit
-_TplTypeDef Get(Integer _Index, _TplTypeDef _Empty)
+// ---------------------------------- //
+/** Get a '_TplTypeDef' component from an entity
+ *
+ *	@param	_Index		The entity index
+ *
+ *	@return 		The component
+*/
+_TplTypeDef Get_TplTypeDef(Integer _Index)
 {
-    // MsUnit::AssertTrue(EntityManager::Exists(_Index), "EntityManager::Exists(" ^ _Index ^ ")");
-    
-    return _TplTypeCompList[_Index];
+	return _TplTypeCompList[_Index];
 }
 
-_TplTypeDef Get(_EntityManager_EntityType _Entity, _TplTypeDef _Empty)
+// ---------------------------------- //
+/** Get a '_TplTypeDef' component from an entity
+ *
+ *	@param	_Entity		The entity
+ *
+ *	@return 		The component
+*/
+_TplTypeDef Get_TplTypeDef(_EntityManager_EntityType _Entity)
 {
-    return _TplTypeCompList[_Entity.Index];
+	return _TplTypeCompList[_Entity.Index];
 }

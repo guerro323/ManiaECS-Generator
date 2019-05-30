@@ -16,15 +16,21 @@
     <None Update="output\ECS\EntityManager.Script.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="template\tpl0_get.Script.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="template\tpl1_set.Script.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="template\tpl2_has.Script.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="template\tpl0_get.Script.txt" />
+    <Content Include="template\tpl0_get.Script.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="template\tpl2_has.Script.txt" />
+    <Content Include="template\tpl2_has.Script.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="template\tpl1_set.Script.txt" />
+    <Content Include="template\tpl1_set.Script.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

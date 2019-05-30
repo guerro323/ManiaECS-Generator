@@ -25,6 +25,7 @@ namespace ManiaECS_Generator.Systems
 			foreach (var str in lines)
 			{
 				var varQueryVersionName = $"QueryVersion_{lineIdx}";
+				var varQueryDataVersionName = varQueryVersionName + "_Data";
 				
 				var structNames = str.Replace(" ", string.Empty)
 				                     .Split(',', StringSplitOptions.RemoveEmptyEntries);
@@ -32,7 +33,9 @@ namespace ManiaECS_Generator.Systems
 				var functionArgument = string.Empty;
 				var queryStruct = string.Empty;
 				var condition = string.Empty;
+				var getDataCondition = string.Empty;
 				var getData = string.Empty;
+				var dataVersion = string.Empty;
 				var checkVersion = string.Empty;
 				var function = string.Empty;
 				
@@ -47,10 +50,12 @@ namespace ManiaECS_Generator.Systems
 						
 					queryStruct      += $"_{name}";
 					headerInside     += $"\n{name} _{name};";
-					functionArgument += $"{name} _{i}, ";
-					condition += $"&& Has(entity, {name} {{}})";
-					getData += $"if (Has(entity, {name} {{}})) queryResult._{name} = Get(entity, {name} {{}}); else continue;\n\t\t";
-					checkVersion += $"if ({varQueryVersionName} < G_{name}Version) rebuild = True;\n";
+					functionArgument += $"_{name};";
+					condition += $"&& Has_{name}(entity)";
+					dataVersion += $"declare Integer {varQueryDataVersionName}_{name};\n";
+					getDataCondition += $"\n\t\tif (!Has_{name}(entity)) continue;";
+					getData += $"\n\t\tif ({varQueryDataVersionName}_{name} < G_{name}Version_Data))\n\t\t{{\n\t\t\tqueryResult._{name} = Get_{name}(entity);\n\t\t\t{varQueryVersionName}_{name} = G_{name}Version_Data;\n\t\t}}";
+					checkVersion += $"\tif ({varQueryVersionName} < G_{name}Version || {varQueryDataVersionName}_{name} < G_{name}Version_Data) rebuild = True;\n";
 					
 					structFound++;
 				}
@@ -64,14 +69,21 @@ namespace ManiaECS_Generator.Systems
 				function += $"declare {queryName}[] Cached_{queryName};\n";
 				function += $"declare SEntity[] Cached_Entities_{queryName};\n";
 				function += $"declare Integer {varQueryVersionName};\n";
+				function += dataVersion;
 				function += $"declare Integer DestroyVersion_{queryName};\n";
 				function += $"declare Boolean Rebuild_GetAllEntities_{queryName};\n";
 				function += $"declare Boolean Rebuild_GetAllData_{queryName};\n";
-				function += $@"SEntity[] GetAllEntities({functionArgument.Remove(functionArgument.Length - 2, 2)})
+				
+				function += $@"
+// ---------------------------------- //
+/** Query entities list with '{functionArgument.Replace(';', ' ').Replace("_", string.Empty).TrimEnd(' ')}' components
+ *
+ * @return 		Return a list of entities
+*/
+SEntity[] QueryEntities{functionArgument.Replace(";", string.Empty)}()
 {{
 	declare rebuild = DestroyVersion_{queryName} < EntityManager::GetDestroyVersion();
-	{checkVersion}
-
+{checkVersion}
 	if (!rebuild && !Rebuild_GetAllEntities_{queryName})
 		return Cached_Entities_{queryName};
 
@@ -96,11 +108,18 @@ namespace ManiaECS_Generator.Systems
 }}
 
 ";
-				function += $@"{queryName}[] GetAllData({functionArgument.Remove(functionArgument.Length - 2, 2)})
+				function += $@"
+// ---------------------------------- //
+/** Query entities data list with '{functionArgument.Replace(';', ' ').Replace("_", string.Empty).TrimEnd(' ')}' components
+ *
+ * @return 		Return the query struct result with components data and entity
+*/
+{queryName}[] QueryData{functionArgument.Replace(";", string.Empty)}()
 {{
 	declare rebuild = DestroyVersion_{queryName} < EntityManager::GetDestroyVersion();
-	{checkVersion}
-
+{checkVersion}
+	// if no entities were destroyed or the other query function didn't asked for a rebuild before,
+	// we can return the cached query.
 	if (!rebuild && !Rebuild_GetAllData_{queryName})
 		return Cached_{queryName};
 
@@ -116,7 +135,8 @@ namespace ManiaECS_Generator.Systems
 	foreach (entity in entities)
 	{{
 		declare queryResult = {queryName} {{}};
-		{getData}
+{getDataCondition}
+{getData}
 
 		queryResult.Entity = entity;
 
