@@ -1,0 +1,26 @@
+#Include "_Globals[MsUnitPath]" as MsUnit
+// ---------------------------------- //
+/** Remove a '_TplTypeDef' component from an entity
+ *
+ *	@param	_Index		The entity index
+*/
+Void Remove_TplTypeDef(Integer _Index)
+{
+	G_RuntimeVersion += 1;
+	G__TplTypeDefVersion = G_RuntimeVersion;    
+
+	_TplTypeCompList.removekey(_Index);
+}
+
+// ---------------------------------- //
+/** Remove a '_TplTypeDef' component from an entity
+ *
+ *	@param	_Entity		The entity
+*/
+Boolean Remove_TplTypeDef(_EntityManager_EntityType _Entity)
+{
+	G_RuntimeVersion += 1;
+	G__TplTypeDefVersion = G_RuntimeVersion;    
+
+	_TplTypeCompList.removekey(_Entity.Index);
+}

@@ -19,6 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="template\tpl3_add.Script.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="template\tpl4_remove.Script.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Remove="template\tpl0_get.Script.txt" />
     <Content Include="template\tpl0_get.Script.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

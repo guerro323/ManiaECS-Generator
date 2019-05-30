@@ -1,0 +1,44 @@
+#Include "_Globals[MsUnitPath]" as MsUnit
+// ---------------------------------- //
+/** Add a '_TplTypeDef' component with default value to the entity.
+ *
+ *	@param	_Index		The entity index
+*/
+Void Add_TplTypeDef(Integer _Index)
+{
+	declare previousCount = _TplTypeCompList.count;
+
+	_TplTypeCompList[_Index] = _TplTypeDef {};
+
+	// for performance reason, instead of checking if the entity did not had the component before
+	// we check if the length of the component array was different before the execution of this method
+	if (previousCount != _TplTypeCompList.count)
+	{
+		G_RuntimeVersion += 1;
+		G__TplTypeDefVersion = G_RuntimeVersion;    
+	}
+	
+	G__TplTypeDefVersion_Data += 1;
+}
+
+// ---------------------------------- //
+/** Add a '_TplTypeDef' component with default value to the entity.
+ *
+ *	@param	_Entity		The entity
+*/
+Void Has_TplTypeDef(_EntityManager_EntityType _Entity)
+{
+	declare previousCount = _TplTypeCompList.count;
+
+	_TplTypeCompList[_Entity.Index] = _TplTypeDef {};
+
+	// for performance reason, instead of checking if the entity did not had the component before
+	// we check if the length of the component array was different before the execution of this method
+	if (previousCount != _TplTypeCompList.count)
+	{
+		G_RuntimeVersion += 1;
+		G__TplTypeDefVersion = G_RuntimeVersion;    
+	}
+	
+	G__TplTypeDefVersion_Data += 1;
+}
