@@ -124,7 +124,7 @@ namespace ManiaECS_Generator.Systems
             str += strStructLibrary + "\n";
             str += strStructAliases + "\n";
 
-            str += "// Struct Header generation...\n";
+            str += "// Struct Header generation...\n\n";
             str += structHeader;
             str += "\n";
 

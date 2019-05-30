@@ -56,6 +56,8 @@ namespace ManiaECS_Generator
         {
             Logger.CurrentLogger = new ConsoleLogger {CanLogVerbose = true};
 
+            options.IncludePrefix = options.IncludePrefix.Replace('\\', '/');
+            
             var inputFolder    = options.InputFolder;
             var outputFolder   = options.OutputFolder;
             var templateFolder = options.TemplateFolder;
