@@ -6,7 +6,7 @@
  *
  *	@return 		The component
 */
-_TplTypeDef Get_TplTypeDef(Integer _Index)
+_TplTypeDef Get__TplTypeDef(Integer _Index)
 {
 	return _TplTypeCompList[_Index];
 }
@@ -18,7 +18,7 @@ _TplTypeDef Get_TplTypeDef(Integer _Index)
  *
  *	@return 		The component
 */
-_TplTypeDef Get_TplTypeDef(_EntityManager_EntityType _Entity)
+_TplTypeDef Get__TplTypeDef(_EntityManager_EntityType _Entity)
 {
 	return _TplTypeCompList[_Entity.Index];
 }

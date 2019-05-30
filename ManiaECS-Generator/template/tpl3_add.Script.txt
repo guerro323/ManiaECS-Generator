@@ -4,7 +4,7 @@
  *
  *	@param	_Index		The entity index
 */
-Void Add_TplTypeDef(Integer _Index)
+Void Add__TplTypeDef(Integer _Index)
 {
 	declare previousCount = _TplTypeCompList.count;
 
@@ -26,7 +26,7 @@ Void Add_TplTypeDef(Integer _Index)
  *
  *	@param	_Entity		The entity
 */
-Void Has_TplTypeDef(_EntityManager_EntityType _Entity)
+Void Add__TplTypeDef(_EntityManager_EntityType _Entity)
 {
 	declare previousCount = _TplTypeCompList.count;
 

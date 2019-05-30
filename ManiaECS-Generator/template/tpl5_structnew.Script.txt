@@ -3,7 +3,7 @@
  *
  *	@return 		A valueless structure
 */
-_TplTypeDef StructNew_TplTypeDef()
+_TplTypeDef StructNew__TplTypeDef()
 {
 	return _TplTypeDef {};
 }

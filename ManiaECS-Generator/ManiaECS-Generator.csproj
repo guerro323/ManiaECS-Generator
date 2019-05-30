@@ -25,6 +25,9 @@
     <Content Include="template\tpl4_remove.Script.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="template\tpl5_structnew.Script.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Remove="template\tpl0_get.Script.txt" />
     <Content Include="template\tpl0_get.Script.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

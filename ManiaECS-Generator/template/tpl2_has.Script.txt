@@ -6,7 +6,7 @@
  *
  *	@return 		True is the component is present, false otherwise
 */
-Boolean Has_TplTypeDef(Integer _Index)
+Boolean Has__TplTypeDef(Integer _Index)
 {
 	return _TplTypeCompList.existskey(_Index);
 }
@@ -18,7 +18,7 @@ Boolean Has_TplTypeDef(Integer _Index)
  *
  *	@return 		True is the component is present, false otherwise
 */
-Boolean Has_TplTypeDef(_EntityManager_EntityType _Entity)
+Boolean Has__TplTypeDef(_EntityManager_EntityType _Entity)
 {
 	return _TplTypeCompList.existskey(_Entity.Index);
 }

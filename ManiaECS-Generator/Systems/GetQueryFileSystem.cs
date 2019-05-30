@@ -49,21 +49,29 @@ namespace ManiaECS_Generator.Systems
 						continue;
 						
 					queryStruct      += $"_{name}";
-					headerInside     += $"\n\t{name} _{name};";
-					functionArgument += $"_{name};";
-					condition += $"&& Has_{name}(entity)";
-					dataVersion += $"declare Integer {varQueryDataVersionName}_{name};\n";
-					getDataCondition += $"\n\t\tif (!Has_{name}(entity)) continue;";
-					getData += $"\n\t\tif ({varQueryDataVersionName}_{name} < G_{name}Version_Data)\n\t\t{{\n\t\t\tqueryResult._{name} = Get_{name}(entity);\n\t\t\t{varQueryVersionName}_{name} = G_{name}Version_Data;\n\t\t}}";
-					checkVersion += $"\tif ({varQueryVersionName} < G_{name}Version || {varQueryDataVersionName}_{name} < G_{name}Version_Data) rebuild = True;\n";
 					
 					structFound++;
 				}
 
 				if (structFound == 0)
 					continue;
-
+				
 				var queryName = queryStruct.Replace("#Struct ", string.Empty);
+				
+				for (var i = 0; i < structNames.Length; i++)
+				{
+					var name = structNames[i];
+					if (name.StartsWith("//"))
+						continue;
+
+					headerInside     += $"\n\t{name} _{name};";
+					functionArgument += $"_{name};";
+					condition        += $"&& Has_{name}(entity)";
+					dataVersion      += $"declare Integer {varQueryDataVersionName}_{name};\n";
+					getDataCondition += $"\n\t\tif (!Has_{name}(entity)) continue;";
+					getData          += $"\n\t\tif (rebuild || Rebuild_GetAllData_{queryName} || {varQueryDataVersionName}_{name} < G_{name}Version_Data)\n\t\t{{\n\t\t\tqueryResult._{name} = Get_{name}(entity);\n\t\t\t{varQueryDataVersionName}_{name} = G_{name}Version_Data;\n\t\t}} else Cached_{queryName}[I]._{name};\n";
+					checkVersion     += $"\tif ({varQueryVersionName} < G_{name}Version || {varQueryDataVersionName}_{name} < G_{name}Version_Data) rebuild = True;\n";
+				}
 
 				function += $"\n//\n// Query {lineIdx}:{queryName} \n//\n";
 				function += $"declare {queryName}[] Cached_{queryName};\n";
@@ -132,11 +140,14 @@ SEntity[] QueryEntities{functionArgument.Replace(";", string.Empty)}()
 	Cached_{queryName}.clear();
 
 	declare entities = EntityManager::GetEntities();
+	declare I = 0;
 	foreach (entity in entities)
 	{{
 		declare queryResult = {queryName} {{}};
 {getDataCondition}
 {getData}
+
+		I += 1;
 
 		queryResult.Entity = entity;
 

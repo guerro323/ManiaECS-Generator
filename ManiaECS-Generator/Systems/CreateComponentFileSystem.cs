@@ -139,7 +139,7 @@ namespace ManiaECS_Generator.Systems
                 destroyFunction += $"\tif ({listName}.existskey(_Entity.Index)) {listName}.removekey(_Entity.Index);\n";
             }
 
-            str += $@"
+            destroyFunction = $@"
 
 // ---------------------------------- //
 /** Destroy an entity with along its remaining components
@@ -181,6 +181,8 @@ Void Destroy(SEntity _Entity)
                     str += "\n";
                 }
             }
+            
+            str += destroyFunction + "\n";
             
             str += "// Bottom generation...\n";
             str += bottom;

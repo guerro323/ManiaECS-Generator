@@ -4,7 +4,7 @@
  *
  *	@param	_Index		The entity index
 */
-Void Remove_TplTypeDef(Integer _Index)
+Void Remove__TplTypeDef(Integer _Index)
 {
 	G_RuntimeVersion += 1;
 	G__TplTypeDefVersion = G_RuntimeVersion;    
@@ -17,7 +17,7 @@ Void Remove_TplTypeDef(Integer _Index)
  *
  *	@param	_Entity		The entity
 */
-Boolean Remove_TplTypeDef(_EntityManager_EntityType _Entity)
+Void Remove__TplTypeDef(_EntityManager_EntityType _Entity)
 {
 	G_RuntimeVersion += 1;
 	G__TplTypeDefVersion = G_RuntimeVersion;    
