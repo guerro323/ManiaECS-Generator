@@ -1,0 +1,9 @@
+// ---------------------------------- //
+/** Construct a valueless structure
+ *
+ *	@return 		A valueless structure
+*/
+_TplTypeDef StructNew_TplTypeDef()
+{
+	return _TplTypeDef {};
+}
